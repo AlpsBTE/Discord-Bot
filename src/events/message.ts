@@ -1,6 +1,6 @@
-const BaseEvent = require("../classes/Event");
-const { MessageEmbed, Message, MessageActionRow, MessageButton } = require("discord.js")
-const Bot = require("../classes/Bot.js");
+import BaseEvent = require("../classes/Event");
+import { MessageEmbed, Message, MessageActionRow, MessageButton } from "discord.js";
+import Bot = require("../classes/Bot.js");
 
 class MessageEvent extends BaseEvent {
     constructor() {

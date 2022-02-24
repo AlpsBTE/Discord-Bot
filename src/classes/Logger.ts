@@ -1,7 +1,7 @@
-const { Console } = require("console");
-const chalk = require("chalk");
+import { Console } from "console";
+import chalk = require("chalk");
 
-class Logger extends Console {
+export class Logger extends Console {
 
     constructor() {
         super(process.stdout, process.stderr);
@@ -35,10 +35,12 @@ class Logger extends Console {
     date(msTimeStamp = new Date().getTime()) {
         let date = new Date(msTimeStamp);
 
-        var minutes = date.getMinutes();
+        let minutes = date.getMinutes();
+
+        // Convert minutes to a two digit string
         if(minutes.toString().length === 1) minutes = `0${minutes}`;
 
-        var seconds = date.getSeconds();
+        let seconds = date.getSeconds();
         if(seconds.toString().length === 1) seconds = `0${seconds}`;
 
         return `[ ${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()} - ${date.getHours()}:${minutes}:${seconds} ]`;

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose = require("mongoose");
 
-const suggestion = new mongoose.model("suggestion", new mongoose.Schema({
+const suggestion = mongoose.model("suggestion", new mongoose.Schema({
     id: { type: Number },
     userid: { type: String},
     messageid: { type: String },

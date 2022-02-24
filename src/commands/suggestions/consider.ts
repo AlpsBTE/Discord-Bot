@@ -1,18 +1,23 @@
-const { MessageEmbed, CommandInteraction, Message } = require('discord.js');
-const Command = require("../../classes/Command.js");
-const Bot = require("../../classes/Bot.js");
+import { MessageEmbed, CommandInteraction, Message } from 'discord.js';
+import Command from "../../classes/Command";
 
-class AcceptCommand extends Command {
+
+class ConsiderCommand extends Command {
     constructor(client) {
         super(client, {
-            name:"delete",
-            description:"Deletes a suggestion",
+            name:"consider",
+            description:"Considers a suggestion",
             userAvailable: false,
             options: [
                 {
                     name: "suggestion-id",
-                    description: "The ID of the Suggestion to delete",
+                    description: "The ID of the Suggestion to consider",
                     type: 10,
+                    required: true,
+                },                {
+                    name: "text",
+                    description: "text",
+                    type: 3,
                     required: true,
                 }
             ]
@@ -25,13 +30,14 @@ class AcceptCommand extends Command {
      * @param {Bot} client
      */   
 
-    async run(interaction, client) {
+    async run(interaction: CommandInteraction, client: Bot) {
         const options = interaction.options;
         const args = options.data;
 
-        let suggestionId = args.find(x => x.name === "suggestion-id")?.value;
+        let suggestionId = args[0]?.value;
+        let considerText = args[1]?.value;
 
-        if(!suggestionId) return;
+        if(!suggestionId || !considerText) return;
 
         let suggestionDb = await this.client.schemas.suggestion.findOne({ id: suggestionId, status: { $ne: "deleted" } });
         if(!suggestionDb) return this.error(interaction, `Es gibt keine Suggestion mit der ID \`${suggestionId}\`!`);
@@ -45,22 +51,34 @@ class AcceptCommand extends Command {
         let suggestionMessage = await suggestionChannel.messages.fetch(suggestionDb.messageid).catch(this.Logger.error);
         if(!suggestionMessage) return this.error(interaction, "Die Nachricht zu dieser Suggestion konnte nicht gefunden werden.");
 
-        if(suggestionMessage.hasThread) {
-            await suggestionMessage.thread.delete(`Suggestion Deleted`).catch(client.Logger.error);
-        };
+        let suggEmbed = suggestionMessage.embeds[0];
 
-        await suggestionMessage.delete().catch(client.Logger.warn)
+        let newSuggEmbed = suggEmbed;
+        newSuggEmbed.fields = [];
 
-        suggestionDb.status = "deleted";
+        newSuggEmbed
+            .addField("Status:", `Consider (${considerText})\n~ ${interaction.user.tag}`)
+            .setColor("YELLOW");
+
+        suggestionMessage.edit({ embeds: [ newSuggEmbed ]}).catch(e => {
+            client.Logger.error(e);
+            return this.error(interaction, "Unknown error occured. (`Wasn't able to fetch message`)")
+        })
+
+        suggestionDb.status = "consider";
         suggestionDb.closed = new Date().getTime();
         await suggestionDb.save();
 
         let suggUser = client.users.cache.get(suggestionDb.userid) || await client.users.fetch(suggestionDb.userid).catch(client.Logger.error);
+        if(suggUser) suggUser.send({ embeds: [ new MessageEmbed()
+            .setDescription(`You're suggestion (\`${suggestionId}\`) in ${suggestionMessage.guild.name} was considered, you can find it [here](${suggestionMessage.url}).`)
+            .setColor("YELLOW")
+        ]}).catch(e => {});
 
         return this.response(interaction, new this.embed()
-            .setDescription(`Suggestion ${suggestionId} was deleted.`)
+            .setDescription(`Suggestion ${suggestionId} was considered.`)
         );
     };
 };
 
-module.exports = AcceptCommand;
+module.exports = ConsiderCommand;

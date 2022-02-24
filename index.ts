@@ -11,12 +11,12 @@
     const mongoose = require("mongoose");
     
     const mongo = client.config.mongo;
-    const connection = await mongoose.connect(`mongodb://${mongo.user}:${encodeURIComponent(mongo.password)}@${mongo.host}/${mongo.database}?ssl=false`, { useNewUrlParser: true, useUnifiedTopology: true });
+    const connection = mongoose.connect(`mongodb://${mongo.user}:${encodeURIComponent(mongo.password)}@${mongo.host}/${mongo.database}?ssl=false`, { useNewUrlParser: true, useUnifiedTopology: true });
     client.connection = connection;
 
     const { registerEvents, registerCommands } = require("./src/functions/register");
     await registerEvents(client, '../events');
-    await registerCommands(client, '../commands');
+    registerCommands(client, '../commands');
     client.Logger.info(`Registered ${client.commands.size} commands`, "COMMANDS")
 
     await client.login(client.config.token);

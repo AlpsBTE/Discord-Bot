@@ -1,7 +1,7 @@
-const BaseEvent = require("../classes/Event.js");
-const Bot = require("../classes/Bot.js");
+import BaseEvent = require("../classes/Event.js");
+import Bot = require("../classes/Bot.js");
 
-module.exports = class extends BaseEvent {
+export default class extends BaseEvent {
     constructor() {
         super('ready');
     };
