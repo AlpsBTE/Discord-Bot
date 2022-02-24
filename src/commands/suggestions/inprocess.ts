@@ -1,11 +1,16 @@
-const { MessageEmbed, CommandInteraction, Message } = require("discord.js");
-import Command = require("../../classes/Command.js");
-import Bot = require("../../classes/Bot.js");
+import { MessageEmbed, CommandInteraction, Message } from "discord.js";
+import { BaseCommand } from "../../classes/Command";
 
-class InprocessCommand extends Command {
+class InprocessCommand extends BaseCommand {
   client: any;
     Logger: any;
-    embed: any;
+    private _embed: any;
+    public get embed(): any {
+        return this._embed;
+    }
+    public set embed(value: any) {
+        this._embed = value;
+    }
   constructor(client) {
     super(client, {
       name: "inprocess",
@@ -34,7 +39,7 @@ class InprocessCommand extends Command {
    * @param {Bot} client
    */
 
-  async run(interaction, client) {
+  async run(interaction: CommandInteraction, client: Bot) {
     const options = interaction.options;
     const args = options.data;
 

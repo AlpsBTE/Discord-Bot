@@ -1,5 +1,5 @@
 import { MessageEmbed, CommandInteraction, Message } from "discord.js";
-import { Bot } from "../classes/Bot";
+import Bot from "../../classes/Bot";
 
 class AcceptCommand extends Command {
   constructor(client) {

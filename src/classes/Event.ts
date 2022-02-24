@@ -1,10 +1,8 @@
-module.exports = class {
-    name: string;
-    constructor (name = "") {
-        this.name = name;
-    }
+export default class BaseEvent {
+  name: string;
+  constructor(name = "") {
+    this.name = name;
+  }
 
-    async run() {
-
-    }
+  async run() {}
 }

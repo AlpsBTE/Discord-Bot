@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 
-class BaseCommand {
+export class BaseCommand {
   client: any;
   config: {
     userAvailable: boolean;
@@ -183,4 +183,4 @@ class BaseCommand {
   }
 }
 
-export default BaseCommand;
+

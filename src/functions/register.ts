@@ -3,7 +3,7 @@ const   { Collection } = require("mongoose"),
         fs = require("fs").promises,
         BaseEvent = require("../classes/Event.js"),
         BaseCommand = require("../classes/Command.js"),
-        Bot = require("../classes/Bot.js");
+        Bot = require("../classes/Bot");
 
 /**
  * @param {Bot} client 

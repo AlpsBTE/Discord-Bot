@@ -1,6 +1,5 @@
 const { MessageEmbed, CommandInteraction, Message } = require('discord.js');
 const Command = require("../../classes/Command.js");
-const Bot = require("../../classes/Bot.js");
 class RejectCommand extends Command {
     constructor(client) {
         super(client, {
