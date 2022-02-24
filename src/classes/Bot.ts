@@ -17,6 +17,6 @@ export default class Bot extends Client {
       suggestion: require("../schemas/suggestion"),
     };
 
-    this.config = require("../../config/config");
+    this.config = require("../../config/config.ts");
   }
 }

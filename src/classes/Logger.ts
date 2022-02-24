@@ -1,7 +1,8 @@
 import { Console } from "console";
-import chalk = require("chalk");
+import * as chalk from "chalk";
 
 export default class Logger extends Console {
+  
   constructor() {
     super(process.stdout, process.stderr);
   }
@@ -9,7 +10,7 @@ export default class Logger extends Console {
   /**
    * @param {String} input
    */
-  info(input, type = "INFO") {
+  info(input: string, type = "INFO") {
     const mess =
       chalk.bold.cyan(this.date() + " - [ " + type + " ] => ") + input;
     this.log(mess);
@@ -18,7 +19,7 @@ export default class Logger extends Console {
   /**
    * @param {String} input
    */
-  error(input) {
+  error(input: string) {
     const mess = chalk.bold.redBright(this.date() + " - [ ERROR ] => ") + input;
     super.error(mess);
   }
@@ -26,7 +27,7 @@ export default class Logger extends Console {
   /**
    * @param {String} input
    */
-  warn(input) {
+  warn(input: string) {
     const mess = chalk.bold.yellow(this.date() + " - [ WARN ] => ") + input;
     super.warn(mess);
   }
@@ -46,4 +47,3 @@ export default class Logger extends Console {
   }
 }
 
-module.exports = Logger;

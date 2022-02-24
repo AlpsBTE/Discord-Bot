@@ -1,4 +1,5 @@
-config.js
+config.ts
 node_modules/
 package-lock.json
 .npmrc
+*.js

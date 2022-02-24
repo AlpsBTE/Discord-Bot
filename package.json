@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/AlpsBTE/Discord-Bot#readme",
   "dependencies": {
+    "@types/mongoose": "^5.11.97",
     "chalk": "^4.1.2",
     "discord.js": "^13.5.1",
     "mongoose": "^6.2.3",

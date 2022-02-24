@@ -16,9 +16,9 @@ module.exports = {
 
   // database
   mongo: {
-    host: "1.1.1.1",
+    host: "127.1.1.0",
     port: 27017,
-    password: "test1234",
+    password: "password",
     user: "username",
     database: "alpsbte", //// AHHHHHHH -> ALPSBTE
   },
