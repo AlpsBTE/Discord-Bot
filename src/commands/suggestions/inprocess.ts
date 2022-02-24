@@ -1,16 +1,17 @@
 import { MessageEmbed, CommandInteraction, Message } from "discord.js";
-import { BaseCommand } from "../../classes/Command";
+import Bot from "../../classes/Bot";
+import BaseCommand from "../../classes/Command";
 
 class InprocessCommand extends BaseCommand {
   client: any;
-    Logger: any;
-    private _embed: any;
-    public get embed(): any {
-        return this._embed;
-    }
-    public set embed(value: any) {
-        this._embed = value;
-    }
+  Logger: any;
+  private _embed: any;
+  public get embed(): any {
+    return this._embed;
+  }
+  public set embed(value: any) {
+    this._embed = value;
+  }
   constructor(client) {
     super(client, {
       name: "inprocess",
@@ -38,7 +39,7 @@ class InprocessCommand extends BaseCommand {
    * @param {CommandInteraction} interaction
    * @param {Bot} client
    */
-
+  // @ts-ignore
   async run(interaction: CommandInteraction, client: Bot) {
     const options = interaction.options;
     const args = options.data;
@@ -130,12 +131,13 @@ class InprocessCommand extends BaseCommand {
       )
     );
   }
-    response(interaction: any, arg1: any) {
-        throw new Error("Method not implemented.");
-    }
-    error(interaction: any, arg1: string) {
-        throw new Error("Method not implemented.");
-    }
+  // @ts-ignore
+  response(interaction: any, arg1: any) {
+    throw new Error("Method not implemented.");
+  }
+  error(interaction: any, arg1: string) {
+    throw new Error("Method not implemented.");
+  }
 }
 
 module.exports = InprocessCommand;

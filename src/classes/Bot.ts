@@ -1,8 +1,8 @@
 import { Client, ClientOptions, Collection } from "discord.js";
-import { Logger } from "./Logger";
+import Logger from "./Logger";
 
-class Bot extends Client {
-  Logger: any;
+export default class Bot extends Client {
+  Logger: Logger;
   commands: Collection<unknown, unknown>;
   schemas: { suggestion: any };
   config: any;
@@ -14,11 +14,9 @@ class Bot extends Client {
     this.commands = new Collection();
 
     this.schemas = {
-      suggestion: require("../schemas/suggestion.ts"),
+      suggestion: require("../schemas/suggestion"),
     };
 
-    this.config = require("../../config/config.ts");
+    this.config = require("../../config/config");
   }
 }
-
-export default Bot;

@@ -1,9 +1,9 @@
 import { MessageEmbed, CommandInteraction, Message } from "discord.js";
-import { BaseCommand } from "../../classes/Command";
+import BaseCommand from "../../classes/Command";
 import Bot from "../../classes/Bot";
 
 class ConsiderCommand extends BaseCommand {
-  constructor(client) {
+  constructor(client: any) {
     super(client, {
       name: "consider",
       description: "Considers a suggestion",
@@ -30,8 +30,8 @@ class ConsiderCommand extends BaseCommand {
    * @param {CommandInteraction} interaction
    * @param {Bot} client
    */
-
-  async run(interaction: CommandInteraction, client: Bot) {
+  // @ts-ignore
+  async run(interaction: CommandInteraction, client: Bot): Promise<any> {
     const options = interaction.options;
     const args = options.data;
 
@@ -117,10 +117,17 @@ class ConsiderCommand extends BaseCommand {
 
     return this.response(
       interaction,
-      new this.embed().setDescription(
+      new this.embed({}).setDescription(
+        // added {} to fix error don't know why or if it works xD
         `Suggestion ${suggestionId} was considered.`
       )
     );
+  }
+  error(
+    interaction: CommandInteraction<import("discord.js").CacheType>,
+    arg1: string
+  ): any {
+    throw new Error("Method not implemented.");
   }
 }
 

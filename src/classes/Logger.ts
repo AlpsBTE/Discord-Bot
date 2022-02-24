@@ -1,7 +1,7 @@
 import { Console } from "console";
 import chalk = require("chalk");
 
-export class Logger extends Console {
+export default class Logger extends Console {
   constructor() {
     super(process.stdout, process.stderr);
   }

@@ -1,15 +1,15 @@
 import { MessageEmbed, CommandInteraction, Message } from "discord.js";
-import { BaseCommand } from "../../classes/Command";
+import BaseCommand from "../../classes/Command";
 import Bot from "../../classes/Bot";
 class AcceptCommand extends BaseCommand {
   client: any;
   private _embed: any;
-    public get embed(): any {
-        return this._embed;
-    }
-    public set embed(value: any) {
-        this._embed = value;
-    }
+  public get embed(): any {
+    return this._embed;
+  }
+  public set embed(value: any) {
+    this._embed = value;
+  }
   response: any;
   Logger: any;
   constructor(client) {
@@ -33,8 +33,8 @@ class AcceptCommand extends BaseCommand {
    * @param {CommandInteraction} interaction
    * @param {Bot} client
    */
-
-  async run(interaction, client) {
+  // @ts-ignore
+  async run(interaction: CommandInteraction, client: Bot) {
     const options = interaction.options;
     const args = options.data;
 
@@ -66,7 +66,7 @@ class AcceptCommand extends BaseCommand {
     /**
      * @type {Message}
      */
-    let suggestionMessage = await suggestionChannel.messages
+    let suggestionMessage: Message = await suggestionChannel.messages
       .fetch(suggestionDb.messageid)
       .catch(this.Logger.error);
     if (!suggestionMessage)

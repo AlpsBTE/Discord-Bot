@@ -1,5 +1,5 @@
-import BaseEvent = require("../classes/Event.js");
-import Bot = require("../classes/Bot.js");
+import BaseEvent from "../classes/Event";
+import Bot from "../classes/Bot";
 
 export default class extends BaseEvent {
     constructor() {
