@@ -1,0 +1,25 @@
+{
+  "name": "alpsbte-discordbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlpsBTE/Discord-Bot.git"
+  },
+  "author": "qreepex",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlpsBTE/Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/AlpsBTE/Discord-Bot#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "discord.js": "^13.5.1",
+    "mongoose": "^6.2.3",
+    "typescript": "^4.5.4"
+  }
+}
