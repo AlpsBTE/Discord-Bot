@@ -1,7 +1,8 @@
 import { MessageEmbed, CommandInteraction, Message } from "discord.js";
 import Bot from "../../classes/Bot";
+import BaseCommand from "../../classes/Command";
 
-class AcceptCommand extends Command {
+class AcceptCommand extends BaseCommand {
   constructor(client) {
     super(client, {
       name: "accept",
@@ -29,7 +30,7 @@ class AcceptCommand extends Command {
    * @param {CommandInteraction} interaction
    * @param {Bot} client
    */
-
+  
   async run(interaction: CommandInteraction, client: Bot) {
     const options = interaction.options;
     const args = options.data;
@@ -116,7 +117,8 @@ class AcceptCommand extends Command {
 
     return this.response(
       interaction,
-      new this.embed().setDescription(
+     
+      new this.embed({}).setDescription( // dont know why this is needed -> Needs one argument
         `Suggestion ${suggestionId} was accepted.`
       )
     );

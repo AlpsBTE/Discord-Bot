@@ -39,7 +39,7 @@ class InprocessCommand extends BaseCommand {
    * @param {CommandInteraction} interaction
    * @param {Bot} client
    */
-  // @ts-ignore
+  
   async run(interaction: CommandInteraction, client: Bot) {
     const options = interaction.options;
     const args = options.data;
@@ -131,8 +131,8 @@ class InprocessCommand extends BaseCommand {
       )
     );
   }
-  // @ts-ignore
-  response(interaction: any, arg1: any) {
+
+  async response(interaction: any, arg1: any) {
     throw new Error("Method not implemented.");
   }
   error(interaction: any, arg1: string) {

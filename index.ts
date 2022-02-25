@@ -1,4 +1,5 @@
 import Bot from "./src/classes/Bot";
+import * as mongoose from "mongoose";
 
 (async () => {
   const { Intents } = require("discord.js");
@@ -15,14 +16,12 @@ import Bot from "./src/classes/Bot";
     ],
   });
 
-  const mongoose = require("mongoose");
-
   const mongo = client.config.mongo;
   const connection = mongoose.connect(
     `mongodb://${mongo.user}:${encodeURIComponent(mongo.password)}@${
       mongo.host
     }/${mongo.database}?ssl=false`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    {}
   );
 
   const {

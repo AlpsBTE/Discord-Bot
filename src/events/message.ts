@@ -16,7 +16,7 @@ class MessageEvent extends BaseEvent {
    * @param {Bot} client
    * @param {Message} msg
    */
-// @ts-ignore
+
   async run(client: Bot, msg: Message) {
     if (msg.author.bot) return;
     if (!msg.guild)

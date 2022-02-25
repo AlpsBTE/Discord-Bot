@@ -33,7 +33,7 @@ class AcceptCommand extends BaseCommand {
    * @param {CommandInteraction} interaction
    * @param {Bot} client
    */
-  // @ts-ignore
+ 
   async run(interaction: CommandInteraction, client: Bot) {
     const options = interaction.options;
     const args = options.data;
