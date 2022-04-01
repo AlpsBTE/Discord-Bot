@@ -1,5 +1,6 @@
 import Event from "../classes/Event";
 import Bot from "../classes/Bot";
+import Command from "../classes/Command";
 
 class ReadyEvent extends Event {
   constructor(client: Bot) {
@@ -14,7 +15,7 @@ class ReadyEvent extends Event {
       "CLIENT"
     );
 
-    client.commands.forEach((command) => {
+    client.commands.forEach((command: Command) => {
       console.log(command.help.name);
     });
 

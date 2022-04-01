@@ -1,4 +1,4 @@
-import mongoose = require("mongoose");
+import * as mongoose from "mongoose";
 
 const suggestion = mongoose.model(
   "suggestion",
