@@ -1,25 +1,46 @@
 {
   "name": "alpsbte-discordbot",
   "version": "1.0.0",
-  "description": "",
+  "description": "AlpsBTE Discord Bot",
   "main": "index.js",
+  "files": [
+    "*.js",
+    "**/*.js"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc & node .",
+    "pretty": "npx prettier --write .",
+    "build": "tsc & npm run pretty",
+    "stable": "npm run build & node ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AlpsBTE/Discord-Bot.git"
   },
-  "author": "qreepex",
+  "author": {
+    "email": "dev@qreepex.xyz",
+    "name": "qreepex",
+    "url": "https://qreepex.xyz"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AlpsBTE/Discord-Bot/issues"
   },
   "homepage": "https://github.com/AlpsBTE/Discord-Bot#readme",
   "dependencies": {
+    "@discordjs/rest": "^0.3.0",
     "chalk": "^4.1.2",
-    "discord.js": "^13.5.1",
-    "mongoose": "^6.2.3",
-    "typescript": "^4.5.5"
+    "discord-api-types": "^0.30.0",
+    "discord.js": "^13.6.0",
+    "mongoose": "^6.1.3"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.11.97",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "eslint": "^8.12.0",
+    "prettier": "^2.6.1",
+    "typescript": "^4.6.3"
   }
 }

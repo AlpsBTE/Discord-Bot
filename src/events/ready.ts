@@ -1,27 +1,29 @@
-import BaseEvent = require("../classes/Event.js");
-import Bot = require("../classes/Bot.js");
+import Event from "../classes/Event";
+import Bot from "../classes/Bot";
 
-export default class extends BaseEvent {
-    constructor() {
-        super('ready');
-    };
+class ReadyEvent extends Event {
+  constructor(client: Bot) {
+    super("ready", client);
+  }
 
-    /**
-     * 
-     * @param {Bot} client 
-     */
+  async run(client: Bot) {
+    client.Logger.info(
+      `Logged in at ${new Date().toLocaleString().replace(",", "")} as ${
+        client.user?.tag
+      } [${client.user?.id}]`,
+      "CLIENT"
+    );
 
-    async run(client) {
-        client.Logger.info(`Logged in at ${new Date().toLocaleString().replace(",","")} as ${client.user.tag} [${client.user.id}]`, "CLIENT");
+    client.commands.forEach((command) => {
+      console.log(command.help.name);
+    });
 
-        client.commands.forEach(command => {
-            if(command.config.staffDc) {
-           //     command.initialize(client.config.staffDc.id);
-                return;
-            }       
-         //   command.initialize(client.config.guild);
-        });
+    client.user?.setPresence({
+      activities: [{ name: "on alps-bte.com", type: "PLAYING" }],
+      status: "online",
+      afk: false,
+    });
+  }
+}
 
-        client.user.setPresence({ activities: [{ name: 'on BTE-Germany.de', type: "PLAYING" }], status: 'online', afK: false });
-    };
-};
+export default ReadyEvent;

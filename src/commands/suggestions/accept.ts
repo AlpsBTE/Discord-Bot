@@ -1,8 +1,9 @@
-import { MessageEmbed, CommandInteraction, Message } from "discord.js";
-import { Bot } from "../classes/Bot";
+import { MessageEmbed, CommandInteraction } from "discord.js";
+import Bot from "../../classes/Bot";
+import Command from "../../classes/Command";
 
 class AcceptCommand extends Command {
-  constructor(client) {
+  constructor(client: Bot) {
     super(client, {
       name: "accept",
       description: "Accepts a suggestion",
@@ -24,22 +25,16 @@ class AcceptCommand extends Command {
     });
   }
 
-  /**
-   *
-   * @param {CommandInteraction} interaction
-   * @param {Bot} client
-   */
-
-  async run(interaction: CommandInteraction, client: Bot) {
+  async run(interaction: CommandInteraction, client: Bot): Promise<any> {
     const options = interaction.options;
     const args = options.data;
 
-    let suggestionId = args[0]?.value;
-    let acceptText = args[1]?.value;
+    const suggestionId = args[0]?.value;
+    const acceptText = args[1]?.value;
 
     if (!suggestionId || !acceptText) return;
 
-    let suggestionDb = await this.client.schemas.suggestion.findOne({
+    const suggestionDb = await this.client.schemas.suggestion.findOne({
       id: suggestionId,
       status: { $ne: "deleted" },
     });
@@ -49,7 +44,7 @@ class AcceptCommand extends Command {
         `Es gibt keine Suggestion mit der ID \`${suggestionId}\`!`
       );
 
-    let suggestionChannel =
+    const suggestionChannel =
       this.client.channels.cache.get(this.client.config.suggestionsChannel) ||
       (await this.client.channels
         .fetch(client.config.suggestionsChannel)
@@ -60,10 +55,8 @@ class AcceptCommand extends Command {
         "Der Suggestion Kanal konnte nicht geladen werden."
       );
 
-    /**
-     * @type {Message}
-     */
-    let suggestionMessage = await suggestionChannel.messages
+    if (suggestionChannel.type != "GUILD_TEXT") return;
+    const suggestionMessage = await suggestionChannel.messages
       .fetch(suggestionDb.messageid)
       .catch(this.Logger.error);
     if (!suggestionMessage)
@@ -72,9 +65,9 @@ class AcceptCommand extends Command {
         "Die Nachricht zu dieser Suggestion konnte nicht gefunden werden."
       );
 
-    let suggEmbed = suggestionMessage.embeds[0];
+    const suggEmbed = suggestionMessage.embeds[0];
 
-    let newSuggEmbed = suggEmbed;
+    const newSuggEmbed = suggEmbed;
     newSuggEmbed.fields = [];
 
     newSuggEmbed
@@ -96,7 +89,7 @@ class AcceptCommand extends Command {
     suggestionDb.closed = new Date().getTime();
     await suggestionDb.save();
 
-    let suggUser =
+    const suggUser =
       client.users.cache.get(suggestionDb.userid) ||
       (await client.users
         .fetch(suggestionDb.userid)
@@ -107,20 +100,18 @@ class AcceptCommand extends Command {
           embeds: [
             new MessageEmbed()
               .setDescription(
-                `Your suggestion (\`${suggestionId}\`) in ${suggestionMessage.guild.name} was accepted, you can find it [here](${suggestionMessage.url}).`
+                `Your suggestion (\`${suggestionId}\`) in ${suggestionMessage.guild?.name} was accepted, you can find it [here](${suggestionMessage.url}).`
               )
               .setColor("GREEN"),
           ],
         })
-        .catch((e) => {});
+        .catch();
 
     return this.response(
       interaction,
-      new this.embed().setDescription(
-        `Suggestion ${suggestionId} was accepted.`
-      )
+      this.embed.setDescription(`Suggestion ${suggestionId} was accepted.`)
     );
   }
 }
 
-module.exports = AcceptCommand;
+export default AcceptCommand;

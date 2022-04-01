@@ -1,23 +1,39 @@
-(async () => {
-    const { Intents } = require("discord.js");
-    const Bot = require("./src/classes/Bot");
+import { Intents } from "discord.js";
+import Bot from "./src/classes/Bot";
+import mongoose from "mongoose";
+import register from "./src/functions/register";
 
-    const client = new Bot({ 
-        partials: ['MESSAGE', 'CHANNEL'],
-        fetchAllMembers: false,
-        intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.DIRECT_MESSAGES]    
-    });
+async function init() {
+  const client = new Bot({
+    partials: ["MESSAGE", "CHANNEL"],
+    intents: [
+      Intents.FLAGS.GUILDS,
+      Intents.FLAGS.GUILD_MESSAGES,
+      Intents.FLAGS.GUILD_PRESENCES,
+      Intents.FLAGS.GUILD_MEMBERS,
+      Intents.FLAGS.GUILD_VOICE_STATES,
+      Intents.FLAGS.DIRECT_MESSAGES,
+    ],
+  });
 
-    const mongoose = require("mongoose");
-    
-    const mongo = client.config.mongo;
-    const connection = mongoose.connect(`mongodb://${mongo.user}:${encodeURIComponent(mongo.password)}@${mongo.host}/${mongo.database}?ssl=false`, { useNewUrlParser: true, useUnifiedTopology: true });
-    client.connection = connection;
+  const mongo = client.config.mongo;
+  const connection = mongoose.connect(
+    `mongodb://${mongo.user}:${encodeURIComponent(mongo.password)}@${
+      mongo.host
+    }/${mongo.database}?ssl=false`
+  );
+  client.connection = connection;
 
-    const { registerEvents, registerCommands } = require("./src/functions/register");
-    await registerEvents(client, '../events');
-    registerCommands(client, '../commands');
-    client.Logger.info(`Registered ${client.commands.size} commands`, "COMMANDS")
+  await register.registerEvents(client, "./src/events");
+  await register.registerCommands(client, "./src/commands");
+  client.Logger.info(`Registered ${client.commands.size} commands`, "COMMANDS");
 
-    await client.login(client.config.token);
-})();
+  await client.login(client.config.token);
+
+  setTimeout(() => {
+    const commandDeployer = require("./commandDeployer");
+    //commandDeployer(client.commands, client.application.id)
+  }, 5000);
+}
+
+init();

@@ -1,11 +1,16 @@
 import { Client, ClientOptions, Collection } from "discord.js";
-import { Logger } from "./Logger";
+import Command from "./Command";
+import Logger from "../utils/Logger";
+import { Model } from "mongoose";
+import suggestion from "../schemas/suggestion";
+import config from "../../config/config";
 
 class Bot extends Client {
-  Logger: any;
-  commands: Collection<unknown, unknown>;
-  schemas: { suggestion: any };
-  config: any;
+  Logger: Logger;
+  commands: Collection<string, Command>;
+  schemas: { suggestion: Model<any, any, any, any> };
+  config: typeof config;
+  connection: Promise<typeof import("mongoose")> | null;
   constructor(options: ClientOptions) {
     super(options);
 
@@ -14,10 +19,12 @@ class Bot extends Client {
     this.commands = new Collection();
 
     this.schemas = {
-      suggestion: require("../schemas/suggestion.ts"),
+      suggestion: suggestion,
     };
 
-    this.config = require("../../config/config.ts");
+    this.config = config;
+
+    this.connection = null;
   }
 }
 

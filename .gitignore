@@ -1,4 +1,6 @@
-config.js
+config.ts
 node_modules/
+*.js
 package-lock.json
 .npmrc
+!commandDeployer.js
